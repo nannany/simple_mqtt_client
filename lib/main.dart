@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 
+import 'publishPage.dart';
+
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
@@ -14,20 +16,24 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: MyHomePage(title: 'Simple MQTT Client'),
+      home: MainPage(title: 'Simple MQTT Client'),
+      routes: <String, WidgetBuilder>{
+        '/home': (BuildContext context) => new MainPage(title: 'Simple MQTT Client'),
+        '/publish': (BuildContext context) => new PublishPage(title: 'Simple MQTT Client')
+      },
     );
   }
 }
 
-class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key, this.title}) : super(key: key);
+class MainPage extends StatefulWidget {
+  MainPage({Key key, this.title}) : super(key: key);
   final String title;
 
   @override
-  _MyHomePageState createState() => _MyHomePageState();
+  _MainPageState createState() => _MainPageState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
+class _MainPageState extends State<MainPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -62,7 +68,10 @@ class _MyHomePageState extends State<MyHomePage> {
                 ),
                 Container(
                   margin: EdgeInsets.all(8.0),
-                  child: IconButton(icon: Icon(Icons.arrow_right, size: 50)),
+                  child: IconButton(
+                      icon: Icon(Icons.arrow_right, size: 50),
+                      onPressed: () =>
+                          Navigator.of(context).pushNamed("/publish")),
                 )
               ],
             ),
@@ -74,7 +83,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   Widget _buildInputField(String explanation, String labelText) {
     return new Container(
-      margin: const EdgeInsets.all(8.0),
+      margin: const EdgeInsets.all(3.0),
       child: Row(
         children: <Widget>[
           Text(explanation),
