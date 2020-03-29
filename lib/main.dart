@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
+import 'package:simple_mqtt_client/smallInputField.dart';
 
 import 'publishPage.dart';
 
@@ -40,43 +41,41 @@ class _MainPageState extends State<MainPage> {
       appBar: AppBar(
         title: Text(widget.title),
       ),
-      body: Center(
-        child: Column(
-          children: <Widget>[
-            Expanded(
-              child: Column(
-                children: <Widget>[
-                  _buildInputField("Host", "127.0.0.1"),
-                  _buildInputField("Port", "1883"),
-                  _buildInputField("Topic", "topic/rabbit"),
-                  _buildInputField("Name", "nannany"),
-                ],
-              ),
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.end,
+      body: Column(
+        children: <Widget>[
+          Expanded(
+            child: Column(
               children: <Widget>[
-                Container(
-                    margin: EdgeInsets.all(8.0),
-                    child: IconButton(
-                      icon: Icon(Icons.link, size: 50),
-//                  onPressed: () => Navigator.pop(context),
-                    )),
-                Container(
-                  margin: EdgeInsets.all(8.0),
-                  child: IconButton(icon: Icon(Icons.save, size: 50)),
-                ),
-                Container(
-                  margin: EdgeInsets.all(8.0),
-                  child: IconButton(
-                      icon: Icon(Icons.arrow_right, size: 50),
-                      onPressed: () =>
-                          Navigator.of(context).pushNamed("/publish")),
-                )
+                SmallInputField("Host", "127.0.0.1"),
+                SmallInputField("Port", "1883"),
+                SmallInputField("Topic", "topic/rabbit"),
+                SmallInputField("Name", "nannany"),
               ],
             ),
-          ],
-        ),
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: <Widget>[
+              Container(
+                  margin: EdgeInsets.all(8.0),
+                  child: IconButton(
+                    icon: Icon(Icons.link, size: 50),
+//                  onPressed: () => Navigator.pop(context),
+                  )),
+              Container(
+                margin: EdgeInsets.all(8.0),
+                child: IconButton(icon: Icon(Icons.save, size: 50)),
+              ),
+              Container(
+                margin: EdgeInsets.all(8.0),
+                child: IconButton(
+                    icon: Icon(Icons.arrow_right, size: 50),
+                    onPressed: () =>
+                        Navigator.of(context).pushNamed("/publish")),
+              )
+            ],
+          ),
+        ],
       ),
     );
   }
