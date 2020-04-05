@@ -19,61 +19,69 @@ class _PublishPageState extends State<PublishPage> {
     return Scaffold(
         appBar: AppBar(title: Text(widget.title)),
         body: Column(children: <Widget>[
-          Container(
-              margin: const EdgeInsets.all(3.0),
-              child: Row(
-                children: <Widget>[
-                  Text("Name"),
-                  Container(
-                    padding: EdgeInsets.all(8.0),
-                    child: DropdownButton(
-                        value: dropdownValue,
-                        onChanged: (String newValue) {
-                          setState(() {
-                            dropdownValue = newValue;
-                          });
-                        },
-                        items: <String>[
-                          "one",
-                          "two",
-                          "threeeeeeeeeeeeeeeeeeeeeeeeeeeee"
-                        ].map<DropdownMenuItem<String>>((String value) {
-                          return DropdownMenuItem<String>(
-                            value: value,
-                            child: Text(value),
-                          );
-                        }).toList()),
-                  ),
-                ],
-              )),
-          Container(
-            padding: EdgeInsets.all(3.0),
-            child: Row(children: <Widget>[
-              Text("Message"),
-              Flexible(
-                child: Container(
-                  padding: EdgeInsets.all(8.0),
-                  child: TextField(
-                    minLines: 5,
-                    maxLines: null,
-                    decoration: InputDecoration(border: OutlineInputBorder()),
-                    onChanged: (content) {
-                      textContent = content;
-                    },
+          Expanded(
+            child: Column(
+              children: <Widget>[
+                Container(
+                    margin: const EdgeInsets.all(3.0),
+                    child: Row(
+                      children: <Widget>[
+                        Text("Name"),
+                        Container(
+                          padding: EdgeInsets.all(8.0),
+                          child: DropdownButton(
+                              value: dropdownValue,
+                              onChanged: (String newValue) {
+                                setState(() {
+                                  dropdownValue = newValue;
+                                });
+                              },
+                              items: <String>[
+                                "one",
+                                "two",
+                                "threeeeeeeeeeeeeeeeeeeeeeeeeeeee"
+                              ].map<DropdownMenuItem<String>>((String value) {
+                                return DropdownMenuItem<String>(
+                                  value: value,
+                                  child: Text(value),
+                                );
+                              }).toList()),
+                        ),
+                      ],
+                    )),
+                Container(
+                  padding: EdgeInsets.all(3.0),
+                  child: Row(children: <Widget>[
+                    Text("Message"),
+                    Flexible(
+                      child: Container(
+                        padding: EdgeInsets.all(8.0),
+                        child: TextField(
+                          minLines: 5,
+                          maxLines: null,
+                          decoration:
+                              InputDecoration(border: OutlineInputBorder()),
+                          onChanged: (content) {
+                            textContent = content;
+                          },
+                        ),
+                      ),
+                    ),
+                  ]),
+                ),
+                Container(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: <Widget>[
+                      IconButton(
+                          icon: Icon(Icons.content_copy, size: 25),
+                          onPressed: () async {
+                            await Clipboard.setData(
+                                ClipboardData(text: textContent));
+                          }),
+                    ],
                   ),
                 ),
-              ),
-            ]),
-          ),
-          Container(
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: <Widget>[
-                IconButton(
-                    icon: Icon(Icons.content_copy, size: 25),
-                    onPressed: () async {
-                      await Clipboard.setData(ClipboardData(text: textContent));
-                    }),
               ],
             ),
           ),
@@ -90,7 +98,6 @@ class _PublishPageState extends State<PublishPage> {
                 margin: EdgeInsets.all(8.0),
                 child: IconButton(icon: Icon(Icons.publish, size: 50)),
               ),
-
             ],
           )
         ]));
