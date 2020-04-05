@@ -76,6 +76,22 @@ class _PublishPageState extends State<PublishPage> {
                     }),
               ],
             ),
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: <Widget>[
+              Container(
+                  margin: EdgeInsets.all(8.0),
+                  child: IconButton(
+                    icon: Icon(Icons.add, size: 50),
+//                  onPressed: () => Navigator.pop(context),
+                  )),
+              Container(
+                margin: EdgeInsets.all(8.0),
+                child: IconButton(icon: Icon(Icons.publish, size: 50)),
+              ),
+
+            ],
           )
         ]));
   }
