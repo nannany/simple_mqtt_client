@@ -25,4 +25,6 @@ class SettingsStore with ChangeNotifier {
     this.name = name;
     notifyListeners();
   }
+
+
 }

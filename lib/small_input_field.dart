@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:simple_mqtt_client/settingsStore.dart';
+import 'package:simple_mqtt_client/settings_store.dart';
 
 class SmallInputField extends StatelessWidget {
   const SmallInputField(this.explanation, this.labelText, {Key key})

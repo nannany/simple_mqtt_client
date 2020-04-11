@@ -4,12 +4,12 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 //import 'package:mqtt_client/mqtt_client.dart';
 import 'package:provider/provider.dart';
-import 'package:simple_mqtt_client/settingsStore.dart';
+import 'package:simple_mqtt_client/settings_store.dart';
 
 //import 'package:mqtt_client/mqtt_browser_client.dart';
-import 'package:simple_mqtt_client/smallInputField.dart';
+import 'package:simple_mqtt_client/small_input_field.dart';
 
-import 'publishPage.dart';
+import 'publish_page.dart';
 
 void main() => runApp(MyApp());
 
