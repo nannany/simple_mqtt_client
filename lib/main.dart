@@ -2,11 +2,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
-//import 'package:mqtt_client/mqtt_client.dart';
+
 import 'package:provider/provider.dart';
 import 'package:simple_mqtt_client/settings_store.dart';
 
-//import 'package:mqtt_client/mqtt_browser_client.dart';
 import 'package:simple_mqtt_client/small_input_field.dart';
 
 import 'publish_page.dart';
@@ -22,10 +21,14 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: MainPage(title: 'Simple MQTT Client'),
+      home: ChangeNotifierProvider<SettingsStore>(
+          create: (context) => SettingsStore(),
+          child: MainPage(title: 'Simple MQTT Client')),
       routes: <String, WidgetBuilder>{
         '/home': (BuildContext context) =>
-            new MainPage(title: 'Simple MQTT Client'),
+            ChangeNotifierProvider<SettingsStore>(
+                create: (context) => SettingsStore(),
+                child: new MainPage(title: 'Simple MQTT Client')),
         '/publish': (BuildContext context) =>
             new PublishPage(title: 'Simple MQTT Client')
       },
@@ -39,66 +42,49 @@ class MainPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final settingsState = Provider.of<SettingsStore>(context, listen: false);
     return Scaffold(
       appBar: AppBar(
         title: Text(this.title),
       ),
-      body: ChangeNotifierProvider(
-        create: (context) => SettingsStore(),
-        child: Column(
-          children: <Widget>[
-            Expanded(
-              child: Column(
-                children: <Widget>[
-                  SmallInputField("Host", "127.0.0.1"),
-                  SmallInputField("Port", "1883"),
-                  SmallInputField("Topic", "topic/rabbit"),
-                  SmallInputField("Name", "nannany"),
-                ],
-              ),
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.end,
+      body: Column(
+        children: <Widget>[
+          Expanded(
+            child: Column(
               children: <Widget>[
-                Container(
-                    margin: EdgeInsets.all(8.0),
-                    child: IconButton(
-                      icon: Icon(Icons.link, size: 50),
-                      onPressed: () => {
-//                       mqttClient = _mqttClientBuilder(context);
-                      },
-                    )),
-                Container(
-                  margin: EdgeInsets.all(8.0),
-                  child: IconButton(
-                    icon: Icon(Icons.save, size: 50),
-                    onPressed: () => {},
-                  ),
-                ),
-                Container(
-                  margin: EdgeInsets.all(8.0),
-                  child: IconButton(
-                      icon: Icon(Icons.arrow_right, size: 50),
-                      onPressed: () =>
-                          Navigator.of(context).pushNamed("/publish")),
-                )
+                SmallInputField("Host", "127.0.0.1"),
+                SmallInputField("Port", "1883"),
+                SmallInputField("Topic", "topic/rabbit"),
+                SmallInputField("Name", "nannany"),
               ],
             ),
-          ],
-        ),
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: <Widget>[
+              Container(
+                  margin: EdgeInsets.all(8.0),
+                  child: IconButton(
+                      icon: Icon(Icons.link, size: 50),
+                      onPressed: () => settingsState.connectMqttServer())),
+              Container(
+                margin: EdgeInsets.all(8.0),
+                child: IconButton(
+                  icon: Icon(Icons.save, size: 50),
+                  onPressed: () => {},
+                ),
+              ),
+              Container(
+                margin: EdgeInsets.all(8.0),
+                child: IconButton(
+                    icon: Icon(Icons.arrow_right, size: 50),
+                    onPressed: () =>
+                        Navigator.of(context).pushNamed("/publish")),
+              )
+            ],
+          ),
+        ],
       ),
     );
   }
-
-//  MqttClient _mqttClientBuilder(BuildContext context) {
-//    final server = Provider.of<SettingsStore>(context).host;
-//    final clientIdentifier = Provider.of<SettingsStore>(context).name;
-//    var port;
-//    try {
-//      port = int.parse(Provider.of<SettingsStore>(context).port);
-//    } catch (exception) {
-//      port = 1883;
-//    }
-//    return MqttBrowserClient.withPort(server, clientIdentifier, port);
-//  }
 }
