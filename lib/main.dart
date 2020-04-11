@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
+//import 'package:mqtt_client/mqtt_client.dart';
 import 'package:provider/provider.dart';
 import 'package:simple_mqtt_client/settingsStore.dart';
 
@@ -64,7 +65,7 @@ class MainPage extends StatelessWidget {
                     child: IconButton(
                       icon: Icon(Icons.link, size: 50),
                       onPressed: () => {
-//                      mqttClient = MqttBrowserClient.withPort(server, clientIdentifier, port);
+//                       mqttClient = _mqttClientBuilder(context);
                       },
                     )),
                 Container(
@@ -88,4 +89,16 @@ class MainPage extends StatelessWidget {
       ),
     );
   }
+
+//  MqttClient _mqttClientBuilder(BuildContext context) {
+//    final server = Provider.of<SettingsStore>(context).host;
+//    final clientIdentifier = Provider.of<SettingsStore>(context).name;
+//    var port;
+//    try {
+//      port = int.parse(Provider.of<SettingsStore>(context).port);
+//    } catch (exception) {
+//      port = 1883;
+//    }
+//    return MqttBrowserClient.withPort(server, clientIdentifier, port);
+//  }
 }

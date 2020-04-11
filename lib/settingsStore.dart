@@ -2,7 +2,7 @@ import 'package:flutter/widgets.dart';
 
 class SettingsStore with ChangeNotifier {
   var host = "127.0.0.1";
-  var port = 1883;
+  var port = "1883";
   var topic = "topic/rabbit";
   var name = "nannany";
 
@@ -11,7 +11,7 @@ class SettingsStore with ChangeNotifier {
     notifyListeners();
   }
 
-  void setPort(int port) {
+  void setPort(String port) {
     this.port = port;
     notifyListeners();
   }
