@@ -14,7 +14,7 @@ class ConnectStatus extends StatelessWidget {
           MqttConnectReturnCode.connectionAccepted) {
         return Text('Connected!');
       } else if (settingStore.getReturnCode == null) {
-        return null;
+        return Container();
       } else {
         return Text('Connection Failed');
       }

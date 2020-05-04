@@ -52,7 +52,13 @@ class SettingsStore with ChangeNotifier {
         MqttServerClient.withPort(_host, _name, _targetPort);
     _mqttClient.logging(on: true);
 
-    var mqttClientConnectionStatus = await _mqttClient.connect();
+    MqttClientConnectionStatus mqttClientConnectionStatus = MqttClientConnectionStatus();
+    try {
+      mqttClientConnectionStatus = await _mqttClient.connect();
+    } catch (e) {
+      _isConnecting = false;
+      print(e);
+    }
 
     _returnCode = mqttClientConnectionStatus.returnCode;
     print(_returnCode);
