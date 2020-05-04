@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:simple_mqtt_client/shared_preferences_helper.dart';
 import 'package:simple_mqtt_client/small_input_field.dart';
 
 class PublishPage extends StatefulWidget {
@@ -12,8 +13,15 @@ class PublishPage extends StatefulWidget {
 }
 
 class _PublishPageState extends State<PublishPage> {
-  String dropdownValue = "one";
+  String dropdownValue = "-";
   String textContent = "";
+  Future<List<String>> connectSettingList;
+
+  @override
+  void initState() {
+    super.initState();
+    connectSettingList = SharedPreferencesHelper.getAllConnectionSettings();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -30,23 +38,43 @@ class _PublishPageState extends State<PublishPage> {
                         Text("Name"),
                         Container(
                           padding: EdgeInsets.all(8.0),
-                          child: DropdownButton(
-                              value: dropdownValue,
-                              onChanged: (String newValue) {
-                                setState(() {
-                                  dropdownValue = newValue;
-                                });
-                              },
-                              items: <String>[
-                                "one",
-                                "two",
-                                "threeeeeeeeeeeeeeeeeeeeeeeeeeeee"
-                              ].map<DropdownMenuItem<String>>((String value) {
-                                return DropdownMenuItem<String>(
-                                  value: value,
-                                  child: Text(value),
-                                );
-                              }).toList()),
+                          child: FutureBuilder(
+                              future: connectSettingList,
+                              builder: (BuildContext context,
+                                  AsyncSnapshot<List<String>> snapshot) {
+                                if (snapshot.hasData) {
+                                  if (snapshot.data.isEmpty) {
+                                    return Text(
+                                      "No connection setting detected",
+                                    );
+                                  } else {
+//                                    return DropdownButton(
+//                                        value: dropdownValue,
+//                                        onChanged: (String newValue) {
+//                                          setState(() {
+//                                            dropdownValue = newValue;
+//                                          });
+//                                        },
+//                                        items: snapshot.data
+//                                            .map<DropdownMenuItem<String>>(
+//                                                (String value) {
+//                                              return DropdownMenuItem<String>(
+//                                                value: value,
+//                                                child: Text(value),
+//                                              );
+//                                            }).toList());
+
+                                    return Text(
+                                      "Several settings detected",
+                                    );
+
+                                  }
+                                } else {
+                                  return Text(
+                                    "Loading",
+                                  );
+                                }
+                              }),
                         ),
                       ],
                     )),

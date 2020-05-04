@@ -67,4 +67,5 @@ class SettingsStore with ChangeNotifier {
 
     notifyListeners();
   }
+
 }
