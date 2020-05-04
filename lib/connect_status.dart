@@ -12,11 +12,17 @@ class ConnectStatus extends StatelessWidget {
         return CircularProgressIndicator();
       } else if (settingStore.getReturnCode ==
           MqttConnectReturnCode.connectionAccepted) {
-        return Text('Connected!');
+        return Text(
+          'Connected!',
+          style: TextStyle(color: Colors.green),
+        );
       } else if (settingStore.getReturnCode == null) {
         return Container();
       } else {
-        return Text('Connection Failed');
+        return Text(
+          'Connection failed',
+          style: TextStyle(color: Colors.red),
+        );
       }
     });
   }
