@@ -50,6 +50,7 @@ class SettingsStore with ChangeNotifier {
 
     MqttServerClient _mqttClient =
         MqttServerClient.withPort(_host, _name, _targetPort);
+    _mqttClient.logging(on: true);
 
     var mqttClientConnectionStatus = await _mqttClient.connect();
 
