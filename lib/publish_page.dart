@@ -67,7 +67,6 @@ class _PublishPageState extends State<PublishPage> {
                                     return Text(
                                       "Several settings detected",
                                     );
-
                                   }
                                 } else {
                                   return Text(
@@ -118,6 +117,13 @@ class _PublishPageState extends State<PublishPage> {
           Row(
             mainAxisAlignment: MainAxisAlignment.end,
             children: <Widget>[
+              Container(
+                  margin: EdgeInsets.all(8.0),
+                  child: IconButton(
+                    icon: Icon(Icons.delete_forever, size: 50),
+                    onPressed: () =>
+                        SharedPreferencesHelper.deleteAllConnectionSettings(),
+                  )),
               Container(
                   margin: EdgeInsets.all(8.0),
                   child: IconButton(
