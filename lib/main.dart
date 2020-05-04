@@ -8,6 +8,7 @@ import 'package:simple_mqtt_client/settings_store.dart';
 
 import 'package:simple_mqtt_client/small_input_field.dart';
 
+import 'connect_status.dart';
 import 'publish_page.dart';
 
 void main() => runApp(MyApp());
@@ -52,13 +53,14 @@ class MainPage extends StatelessWidget {
           Expanded(
             child: Column(
               children: <Widget>[
-                SmallInputField("Host", "127.0.0.1"),
-                SmallInputField("Port", "1883"),
-                SmallInputField("Topic", "topic/rabbit"),
-                SmallInputField("Name", "nannany"),
+                SmallInputField("Host", "ex)127.0.0.1"),
+                SmallInputField("Port", "ex)1883"),
+                SmallInputField("Topic", "ex)topic/rabbit"),
+                SmallInputField("Name", "ex)nannany"),
               ],
             ),
           ),
+          ConnectStatus(),
           Row(
             mainAxisAlignment: MainAxisAlignment.end,
             children: <Widget>[
@@ -88,3 +90,4 @@ class MainPage extends StatelessWidget {
     );
   }
 }
+

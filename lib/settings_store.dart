@@ -8,7 +8,7 @@ class SettingsStore with ChangeNotifier {
   String _topic = "topic/rabbit";
   String _name = "nannany";
   bool _isConnecting = false;
-  bool _isConnected = false;
+  MqttConnectReturnCode _returnCode;
 
   void setHost(String host) {
     _host = host;
@@ -40,7 +40,7 @@ class SettingsStore with ChangeNotifier {
 
   bool get isConnecting => _isConnecting;
 
-  bool get isConnected => _isConnected;
+  MqttConnectReturnCode get getReturnCode => _returnCode;
 
   Future<void> connectMqttServer() async {
     _isConnecting = true;
@@ -54,14 +54,8 @@ class SettingsStore with ChangeNotifier {
 
     var mqttClientConnectionStatus = await _mqttClient.connect();
 
-    var returnCode = mqttClientConnectionStatus.returnCode;
-    print(returnCode);
-
-    if (returnCode == MqttConnectReturnCode.connectionAccepted) {
-      _isConnected = true;
-    } else {
-      _isConnected = false;
-    }
+    _returnCode = mqttClientConnectionStatus.returnCode;
+    print(_returnCode);
 
     _isConnecting = false;
 
