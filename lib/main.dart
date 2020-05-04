@@ -5,10 +5,12 @@ import 'package:flutter/widgets.dart';
 
 import 'package:provider/provider.dart';
 import 'package:simple_mqtt_client/settings_store.dart';
+import 'package:simple_mqtt_client/shared_preferences_helper.dart';
 
 import 'package:simple_mqtt_client/small_input_field.dart';
 
 import 'connect_status.dart';
+import 'connection_setting.dart';
 import 'publish_page.dart';
 
 void main() => runApp(MyApp());
@@ -74,7 +76,12 @@ class MainPage extends StatelessWidget {
                 margin: EdgeInsets.all(8.0),
                 child: IconButton(
                   icon: Icon(Icons.save, size: 50),
-                  onPressed: () => {},
+                  onPressed: () => {
+                    SharedPreferencesHelper.saveConnectionSetting(
+                        settingsState.getName,
+                        ConnectionSetting(
+                            settingsState.getHost, settingsState.getPort))
+                  },
                 ),
               ),
               Container(
