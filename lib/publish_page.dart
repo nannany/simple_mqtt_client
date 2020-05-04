@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:simple_mqtt_client/small_input_field.dart';
 
 class PublishPage extends StatefulWidget {
   PublishPage({Key key, this.title}) : super(key: key);
@@ -49,6 +50,7 @@ class _PublishPageState extends State<PublishPage> {
                         ),
                       ],
                     )),
+                SmallInputField("Topic", "ex)topic/rabbit"),
                 Container(
                   padding: EdgeInsets.all(3.0),
                   child: Row(children: <Widget>[

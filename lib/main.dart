@@ -31,7 +31,9 @@ class MyApp extends StatelessWidget {
                 create: (context) => SettingsStore(),
                 child: new MainPage(title: 'Simple MQTT Client')),
         '/publish': (BuildContext context) =>
-            new PublishPage(title: 'Simple MQTT Client')
+            ChangeNotifierProvider<SettingsStore>(
+                create: (context) => SettingsStore(),
+                child: new PublishPage(title: 'Simple MQTT Client'))
       },
     );
   }
@@ -55,7 +57,6 @@ class MainPage extends StatelessWidget {
               children: <Widget>[
                 SmallInputField("Host", "ex)127.0.0.1"),
                 SmallInputField("Port", "ex)1883"),
-                SmallInputField("Topic", "ex)topic/rabbit"),
                 SmallInputField("Name", "ex)nannany"),
               ],
             ),
@@ -90,4 +91,3 @@ class MainPage extends StatelessWidget {
     );
   }
 }
-
