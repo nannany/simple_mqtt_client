@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:mqtt_client/mqtt_client.dart';
 import 'package:mqtt_client/mqtt_server_client.dart';
@@ -15,6 +16,13 @@ class SettingsStore with ChangeNotifier {
   bool _isConnecting = false;
   bool _isSaved = false;
   MqttConnectReturnCode _returnCode;
+  TextStyle _saveStatusTextStatus = _initialSaveStatusTextStyle;
+
+  static TextStyle _initialSaveStatusTextStyle =
+      TextStyle(color: Colors.black, fontSize: 0);
+
+  static TextStyle _transformedSaveStatusTextStyle =
+      TextStyle(color: Colors.blueAccent, fontSize: 20);
 
   void setHost(String host) {
     _host = host;
@@ -41,6 +49,11 @@ class SettingsStore with ChangeNotifier {
     notifyListeners();
   }
 
+  void setSaveStatusTextStyleDefault() {
+    _saveStatusTextStatus = _initialSaveStatusTextStyle;
+    notifyListeners();
+  }
+
   String get getHost => _host;
 
   String get getPort => _port;
@@ -54,6 +67,8 @@ class SettingsStore with ChangeNotifier {
   bool get isSaved => _isSaved;
 
   MqttConnectReturnCode get getReturnCode => _returnCode;
+
+  TextStyle get getSaveStatusTextStyle => _saveStatusTextStatus;
 
   Future<void> connectMqttServer() async {
     _isConnecting = true;
@@ -89,6 +104,7 @@ class SettingsStore with ChangeNotifier {
     final prefs = await SharedPreferences.getInstance();
 
     _isSaved = true;
+    _saveStatusTextStatus = _transformedSaveStatusTextStyle;
 
     notifyListeners();
 
