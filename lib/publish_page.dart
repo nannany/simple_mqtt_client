@@ -1,8 +1,12 @@
+import 'dart:convert';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:simple_mqtt_client/shared_preferences_helper.dart';
 import 'package:simple_mqtt_client/small_input_field.dart';
+
+import 'connection_setting.dart';
 
 class PublishPage extends StatefulWidget {
   PublishPage({Key key, this.title}) : super(key: key);
@@ -48,21 +52,40 @@ class _PublishPageState extends State<PublishPage> {
                                       "No connection setting detected",
                                     );
                                   } else {
-                                    return DropdownButton(
-                                        value: dropdownValue ?? snapshot.data[0],
-                                        onChanged: (String newValue) {
-                                          setState(() {
-                                            dropdownValue = newValue;
-                                          });
-                                        },
-                                        items: snapshot.data
-                                            .map<DropdownMenuItem<String>>(
-                                                (String value) {
+                                    List<ConnectionSetting>
+                                        _connectionSettingList = snapshot.data
+                                            .map<ConnectionSetting>(
+                                                (String jsonStr) {
+                                      return ConnectionSetting.fromJson(
+                                          jsonDecode(jsonStr));
+                                    }).toList();
+                                    return Column(
+                                      children: <Widget>[
+                                        DropdownButton(
+                                            value: dropdownValue ??
+                                                _connectionSettingList[0].name,
+                                            onChanged: (String newValue) {
+                                              setState(() {
+                                                dropdownValue = newValue;
+                                              });
+                                            },
+                                            items: _connectionSettingList
+                                                .map<DropdownMenuItem<String>>(
+                                                    (ConnectionSetting cs) {
                                               return DropdownMenuItem<String>(
-                                                value: value,
-                                                child: Text(value),
+                                                value: cs.name,
+                                                child: Text(cs.name),
                                               );
-                                            }).toList());
+                                            }).toList()),
+                                        Text(_connectionSettingList
+                                            .firstWhere(
+                                                (ConnectionSetting cs) =>
+                                                    cs.name == dropdownValue,
+                                                orElse: () =>
+                                                    _connectionSettingList[0])
+                                            .getHostAndPort())
+                                      ],
+                                    );
                                   }
                                 } else {
                                   return Text(
