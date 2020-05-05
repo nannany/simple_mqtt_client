@@ -13,7 +13,7 @@ class PublishPage extends StatefulWidget {
 }
 
 class _PublishPageState extends State<PublishPage> {
-  String dropdownValue = "-";
+  String dropdownValue;
   String textContent = "";
   Future<List<String>> connectSettingList;
 
@@ -48,25 +48,21 @@ class _PublishPageState extends State<PublishPage> {
                                       "No connection setting detected",
                                     );
                                   } else {
-//                                    return DropdownButton(
-//                                        value: dropdownValue,
-//                                        onChanged: (String newValue) {
-//                                          setState(() {
-//                                            dropdownValue = newValue;
-//                                          });
-//                                        },
-//                                        items: snapshot.data
-//                                            .map<DropdownMenuItem<String>>(
-//                                                (String value) {
-//                                              return DropdownMenuItem<String>(
-//                                                value: value,
-//                                                child: Text(value),
-//                                              );
-//                                            }).toList());
-
-                                    return Text(
-                                      "Several settings detected",
-                                    );
+                                    return DropdownButton(
+                                        value: dropdownValue ?? snapshot.data[0],
+                                        onChanged: (String newValue) {
+                                          setState(() {
+                                            dropdownValue = newValue;
+                                          });
+                                        },
+                                        items: snapshot.data
+                                            .map<DropdownMenuItem<String>>(
+                                                (String value) {
+                                              return DropdownMenuItem<String>(
+                                                value: value,
+                                                child: Text(value),
+                                              );
+                                            }).toList());
                                   }
                                 } else {
                                   return Text(
