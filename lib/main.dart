@@ -4,8 +4,8 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 
 import 'package:provider/provider.dart';
+import 'package:simple_mqtt_client/save_status.dart';
 import 'package:simple_mqtt_client/settings_store.dart';
-import 'package:simple_mqtt_client/shared_preferences_helper.dart';
 
 import 'package:simple_mqtt_client/small_input_field.dart';
 
@@ -64,6 +64,7 @@ class MainPage extends StatelessWidget {
             ),
           ),
           ConnectStatus(),
+          SaveStatus(),
           Row(
             mainAxisAlignment: MainAxisAlignment.end,
             children: <Widget>[
@@ -77,7 +78,7 @@ class MainPage extends StatelessWidget {
                 child: IconButton(
                   icon: Icon(Icons.save, size: 50),
                   onPressed: () => {
-                    SharedPreferencesHelper.saveConnectionSetting(
+                    settingsState.saveConnectionSetting(
                         settingsState.getName,
                         ConnectionSetting(settingsState.getHost,
                             settingsState.getPort, settingsState.getName))
