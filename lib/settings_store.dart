@@ -15,6 +15,7 @@ class SettingsStore with ChangeNotifier {
   String _name = "nannany";
   bool _isConnecting = false;
   bool _isSaved = false;
+  bool _isSaveButtonEnable = false;
   MqttConnectReturnCode _returnCode;
   TextStyle _saveStatusTextStatus = _initialSaveStatusTextStyle;
 
@@ -49,8 +50,14 @@ class SettingsStore with ChangeNotifier {
     notifyListeners();
   }
 
+  void setIsSaveButtonEnable(bool isSaveButtonEnable) {
+    _isSaveButtonEnable = isSaveButtonEnable;
+    notifyListeners();
+  }
+
   void setSaveStatusTextStyleDefault() {
     _saveStatusTextStatus = _initialSaveStatusTextStyle;
+    _isSaveButtonEnable = false;
     notifyListeners();
   }
 
@@ -65,6 +72,8 @@ class SettingsStore with ChangeNotifier {
   bool get isConnecting => _isConnecting;
 
   bool get isSaved => _isSaved;
+
+  bool get isSaveButtonEnable => _isSaveButtonEnable;
 
   MqttConnectReturnCode get getReturnCode => _returnCode;
 
@@ -84,6 +93,7 @@ class SettingsStore with ChangeNotifier {
         MqttClientConnectionStatus();
     try {
       mqttClientConnectionStatus = await _mqttClient.connect();
+      _isSaveButtonEnable = true;
     } catch (e) {
       _isConnecting = false;
       print(e);

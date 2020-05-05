@@ -47,7 +47,7 @@ class MainPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final settingsState = Provider.of<SettingsStore>(context, listen: false);
+    final settingsState = Provider.of<SettingsStore>(context);
     return Scaffold(
       appBar: AppBar(
         title: Text(this.title),
@@ -77,12 +77,13 @@ class MainPage extends StatelessWidget {
                 margin: EdgeInsets.all(8.0),
                 child: IconButton(
                   icon: Icon(Icons.save, size: 50),
-                  onPressed: () => {
-                    settingsState.saveConnectionSetting(
-                        settingsState.getName,
-                        ConnectionSetting(settingsState.getHost,
-                            settingsState.getPort, settingsState.getName))
-                  },
+                  onPressed: settingsState.isSaveButtonEnable
+                      ? () => settingsState.saveConnectionSetting(
+                          settingsState.getName,
+                          ConnectionSetting(settingsState.getHost,
+                              settingsState.getPort, settingsState.getName))
+                      : null,
+                  disabledColor: Colors.grey,
                 ),
               ),
               Container(
