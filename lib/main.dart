@@ -79,8 +79,8 @@ class MainPage extends StatelessWidget {
                   onPressed: () => {
                     SharedPreferencesHelper.saveConnectionSetting(
                         settingsState.getName,
-                        ConnectionSetting(
-                            settingsState.getHost, settingsState.getPort))
+                        ConnectionSetting(settingsState.getHost,
+                            settingsState.getPort, settingsState.getName))
                   },
                 ),
               ),
