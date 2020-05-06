@@ -131,8 +131,24 @@ class SettingsStore with ChangeNotifier {
     notifyListeners();
   }
 
+  // atLeastOnce
   Future<void> publishMessageToMqttServer() async {
+//    int _intTargetPort = int.parse(_targetPort);
 
+    final MqttServerClient _mqttClient =
+        MqttServerClient.withPort('192.168.11.8', _name, 1883);
+    try {
+      await _mqttClient.connect();
+    } catch (e) {
+      print("connection failed");
+      return;
+    }
+
+    final MqttClientPayloadBuilder payloadBuilder = MqttClientPayloadBuilder();
+    payloadBuilder.addString(_message);
+
+    _mqttClient.publishMessage(
+        _topic, MqttQos.atLeastOnce, payloadBuilder.payload);
   }
 
   Future<bool> saveConnectionSetting(

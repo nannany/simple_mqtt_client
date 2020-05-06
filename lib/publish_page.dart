@@ -153,7 +153,10 @@ class _PublishPageState extends State<PublishPage> {
                   )),
               Container(
                 margin: EdgeInsets.all(8.0),
-                child: IconButton(icon: Icon(Icons.publish, size: 50)),
+                child: IconButton(
+                    icon: Icon(Icons.publish, size: 50),
+                    onPressed: () =>
+                        settingsState.publishMessageToMqttServer()),
               ),
             ],
           )
