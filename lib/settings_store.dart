@@ -13,6 +13,9 @@ class SettingsStore with ChangeNotifier {
   String _port = "1883";
   String _topic = "topic/rabbit";
   String _name = "nannany";
+  String _message = "";
+  String _targetHost;
+  String _targetPort;
   bool _isConnecting = false;
   bool _isSaved = false;
   bool _isSaveButtonEnable = false;
@@ -45,6 +48,21 @@ class SettingsStore with ChangeNotifier {
     notifyListeners();
   }
 
+  void setMessage(String message) {
+    _message = message;
+    notifyListeners();
+  }
+
+  void setTargetHost(String targetHost) {
+    _targetHost = targetHost;
+    notifyListeners();
+  }
+
+  void setTargetPort(String targetPort) {
+    _targetPort = targetPort;
+    notifyListeners();
+  }
+
   void setIsSaved(bool isSaved) {
     _isSaved = isSaved;
     notifyListeners();
@@ -69,6 +87,12 @@ class SettingsStore with ChangeNotifier {
 
   String get getName => _name;
 
+  String get getMessage => _message;
+
+  String get getTargetHost => _targetHost;
+
+  String get getTargetPort => _targetPort;
+
   bool get isConnecting => _isConnecting;
 
   bool get isSaved => _isSaved;
@@ -83,10 +107,10 @@ class SettingsStore with ChangeNotifier {
     _isConnecting = true;
     notifyListeners();
 
-    int _targetPort = int.parse(_port);
+    int _intPort = int.parse(_port);
 
     MqttServerClient _mqttClient =
-        MqttServerClient.withPort(_host, _name, _targetPort);
+        MqttServerClient.withPort(_host, _name, _intPort);
     _mqttClient.logging(on: true);
 
     MqttClientConnectionStatus mqttClientConnectionStatus =
@@ -105,6 +129,10 @@ class SettingsStore with ChangeNotifier {
     _isConnecting = false;
 
     notifyListeners();
+  }
+
+  Future<void> publishMessageToMqttServer() async {
+
   }
 
   Future<bool> saveConnectionSetting(

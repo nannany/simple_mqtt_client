@@ -3,6 +3,8 @@ import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:provider/provider.dart';
+import 'package:simple_mqtt_client/settings_store.dart';
 import 'package:simple_mqtt_client/shared_preferences_helper.dart';
 import 'package:simple_mqtt_client/small_input_field.dart';
 
@@ -18,7 +20,6 @@ class PublishPage extends StatefulWidget {
 
 class _PublishPageState extends State<PublishPage> {
   String dropdownValue;
-  String textContent = "";
   Future<List<String>> connectSettingList;
 
   @override
@@ -29,6 +30,7 @@ class _PublishPageState extends State<PublishPage> {
 
   @override
   Widget build(BuildContext context) {
+    final settingsState = Provider.of<SettingsStore>(context);
     return Scaffold(
         appBar: AppBar(title: Text(widget.title)),
         body: Column(children: <Widget>[
@@ -110,7 +112,7 @@ class _PublishPageState extends State<PublishPage> {
                           decoration:
                               InputDecoration(border: OutlineInputBorder()),
                           onChanged: (content) {
-                            textContent = content;
+                            settingsState.setMessage(content);
                           },
                         ),
                       ),
@@ -125,7 +127,7 @@ class _PublishPageState extends State<PublishPage> {
                           icon: Icon(Icons.content_copy, size: 25),
                           onPressed: () async {
                             await Clipboard.setData(
-                                ClipboardData(text: textContent));
+                                ClipboardData(text: settingsState.getMessage));
                           }),
                     ],
                   ),
