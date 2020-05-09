@@ -79,13 +79,9 @@ class _PublishPageState extends State<PublishPage> {
                                                 child: Text(cs.name),
                                               );
                                             }).toList()),
-                                        Text(_connectionSettingList
-                                            .firstWhere(
-                                                (ConnectionSetting cs) =>
-                                                    cs.name == dropdownValue,
-                                                orElse: () =>
-                                                    _connectionSettingList[0])
-                                            .getHostAndPort())
+                                        Text(settingsState.getHostAndPort(
+                                            _connectionSettingList,
+                                            dropdownValue))
                                       ],
                                     );
                                   }

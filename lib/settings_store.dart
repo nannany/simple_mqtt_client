@@ -133,10 +133,10 @@ class SettingsStore with ChangeNotifier {
 
   // atLeastOnce
   Future<void> publishMessageToMqttServer() async {
-//    int _intTargetPort = int.parse(_targetPort);
+    int _intTargetPort = int.parse(_targetPort);
 
     final MqttServerClient _mqttClient =
-        MqttServerClient.withPort('192.168.11.8', _name, 1883);
+        MqttServerClient.withPort(_targetHost, _name, _intTargetPort);
     try {
       await _mqttClient.connect();
     } catch (e) {
@@ -163,5 +163,18 @@ class SettingsStore with ChangeNotifier {
     notifyListeners();
 
     return prefs.setString(key, json.encode(value));
+  }
+
+  String getHostAndPort(List<ConnectionSetting> csList, String targetName) {
+    ConnectionSetting _cs = csList.firstWhere(
+        (ConnectionSetting cs) => cs.name == targetName,
+        orElse: () => csList[0]);
+
+    _targetHost = _cs.host;
+    _targetPort = _cs.port;
+
+    notifyListeners();
+
+    return "$_targetHost:$_targetPort";
   }
 }

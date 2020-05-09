@@ -12,7 +12,4 @@ class ConnectionSetting {
 
   Map<String, dynamic> toJson() => {'host': host, 'port': port, 'name': name};
 
-  String getHostAndPort() {
-    return "${this.host}:${this.port}";
-  }
 }
