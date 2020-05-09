@@ -173,8 +173,6 @@ class SettingsStore with ChangeNotifier {
     _targetHost = _cs.host;
     _targetPort = _cs.port;
 
-    notifyListeners();
-
     return "$_targetHost:$_targetPort";
   }
 }
